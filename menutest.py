@@ -107,6 +107,7 @@ class WidgetFrame(Frame):
                 'side': 'top',
                 'expand': 1,
                 'fill': 'both',
+                'anchor': tk.NW,
             }
         
         self.index = index
@@ -121,9 +122,13 @@ class WidgetFrame(Frame):
         self.fillvar = tk.StringVar(self)
         self.fillvar.set('both')
         
+        self.anchvar = tk.StringVar(self)
+        self.anchvar.set(tk.NW)
+        
         ttk.OptionMenu(self, self.sidestr, 'top', 'left', 'bottom', 'right', 'top', command=self.updatePackSide).pack()
         ttk.OptionMenu(self, self.expvar, 'True', 'True', 'False', command=self.updateExpand).pack()
         ttk.OptionMenu(self, self.fillvar, 'both', 'x', 'y', 'none', 'both', command=self.updateFill).pack()
+        ttk.OptionMenu(self, self.anchvar, tk.NW, tk.NW, tk.N, tk.NE, tk.E, tk.SE, tk.S, tk.SW, tk.W, command=self.updateAnchor).pack()
         
     def updatePackSide(self, v):
         self.packdata['side'] = self.sidestr.get()
@@ -137,6 +142,10 @@ class WidgetFrame(Frame):
         self.packdata['fill'] = self.fillvar.get()
         self.controller.updateFrames()
         
+    def updateAnchor(self, v):
+        self.packdata['anchor'] = self.anchvar.get()
+        self.controller.updateFrames()
+
 
 if __name__ == '__main__':
     app = App()
